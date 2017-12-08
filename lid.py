@@ -198,7 +198,7 @@ if __name__ == '__main__':
         elif choice == 3:
             for ip in dns.server:
                 ping_print(ip)
-            ping_print('119.29.29.29')
+            # ping_print('119.29.29.29')
             os.system('pause')
             return
         elif choice == 4:
