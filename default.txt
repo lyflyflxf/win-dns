@@ -1,0 +1,91 @@
+# Localhost (DO NOT REMOVE)
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+
+### 屏蔽百度定位
+
+1.0.0.1 api.map.baidu.com
+1.0.0.1 ps.map.baidu.com
+1.0.0.1 sv.map.baidu.com
+1.0.0.1 offnavi.map.baidu.com
+1.0.0.1 newvector.map.baidu.com
+1.0.0.1 ulog.imap.baidu.com
+1.0.0.1 newloc.map.n.shifen.com
+
+::2 api.map.baidu.com
+::2 ps.map.baidu.com
+::2 sv.map.baidu.com
+::2 offnavi.map.baidu.com
+::2 newvector.map.baidu.com
+::2 ulog.imap.baidu.com
+::2 newloc.map.n.shifen.com
+### 屏蔽域名纠错
+127.0.0.1 push.hb.cnc.cn
+127.0.0.1 yc.jsnetcom.com
+127.0.0.1 nfdnserror1.wo.com.cn
+127.0.0.1 nfdnserror2.wo.com.cn
+127.0.0.1 nfdnserror3.wo.com.cn
+127.0.0.1 nfdnserror4.wo.com.cn
+127.0.0.1 nfdnserror5.wo.com.cn
+127.0.0.1 nfdnserror6.wo.com.cn
+127.0.0.1 nfdnserror7.wo.com.cn
+127.0.0.1 nfdnserror8.wo.com.cn
+127.0.0.1 nfdnserror9.wo.com.cn
+127.0.0.1 nfdnserror10.wo.com.cn
+
+127.0.0.1 staticset.com
+
+#adobe update
+127.0.0.1 lmlicenses.wip4.adobe.com
+127.0.0.1 lm.licenses.adobe.com
+127.0.0.1 3dns-2.adobe.com
+127.0.0.1 3dns-3.adobe.com
+127.0.0.1 activate.adobe.com
+127.0.0.1 activate-sea.adobe.com
+127.0.0.1 activate-sjc0.adobe.com
+127.0.0.1 adobe-dns.adobe.com
+127.0.0.1 adobe-dns-2.adobe.com
+127.0.0.1 adobe-dns-3.adobe.com
+127.0.0.1 ereg.adobe.com
+127.0.0.1 hl2rcv.adobe.com
+127.0.0.1 practivate.adobe.com
+127.0.0.1 wip3.adobe.com
+127.0.0.1 activate.wip3.adobe.com
+127.0.0.1 ereg.wip3.adobe.com
+127.0.0.1 wwis-dubc1-vip60.adobe.com
+
+# Pixiv Start
+210.129.120.55	www.pixiv.net
+210.129.120.43	touch.pixiv.net
+210.140.131.146	source.pixiv.net
+210.129.120.41	accounts.pixiv.net
+210.140.131.147	imgaz.pixiv.net
+210.129.120.44	app-api.pixiv.net
+210.129.120.48	oauth.secure.pixiv.net
+210.129.120.54	dic.pixiv.net
+210.140.131.145	comic.pixiv.net
+210.129.120.53	factory.pixiv.net
+74.120.148.205	g-client-proxy.pixiv.net
+210.140.170.179	sketch.pixiv.net
+210.129.120.52	payment.pixiv.net
+210.129.120.51	sensei.pixiv.net
+210.140.131.144	novel.pixiv.net
+210.129.120.49	ssl.pixiv.net
+66.6.32.22	times.pixiv.net
+210.129.120.50	recruit.pixiv.net
+210.129.120.49	pixiv.net
+113.33.39.198	p2.pixiv.net
+210.129.120.47	matsuri.pixiv.net
+210.129.120.46	m.pixiv.net
+52.85.87.254	iracon.pixiv.net
+52.69.82.228	inside.pixiv.net
+210.140.131.147	i1.pixiv.net
+153.120.23.207	help.pixiv.net
+52.219.4.58	goods.pixiv.net
+210.129.120.40	genepixiv.pr.pixiv.net
+52.85.87.122	festa.pixiv.net
+210.129.120.45	en.dic.pixiv.net
+52.219.4.114	dev.pixiv.net
+210.129.120.42	chat.pixiv.net
+113.33.39.198	blog.pixiv.net
+# Pixiv End
