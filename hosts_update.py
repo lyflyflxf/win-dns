@@ -188,7 +188,7 @@ def update(dl=None, alter_switch=True):
         dl=dlhosts()
 
     try:
-        add = open(r'E:\py\tools\lid\default.txt', 'r').readlines()
+        add = open('default.txt','r').readlines()#r'E:\py\tools\lid\default.txt', 'r').readlines()
     except IOError as error:
         print (error)
         err=error

@@ -43,7 +43,7 @@ class MyApp:
         if error==None:
             text=u'已刷新 hosts'
         else:
-            text=u'已刷新 hosts\n'+unicode(error)
+            text=u'已刷新 hosts\n'+str(error)
         self.topText.set(text)
 
     def judge_update(self):
