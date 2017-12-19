@@ -284,6 +284,7 @@ if __name__ == '__main__':
     def run(choice):
         if choice == '':
             exit()
+            
         elif choice == '0':
             subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
                               win_hosts_dir])
