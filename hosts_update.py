@@ -23,6 +23,7 @@ TODO:
 
 import os
 import urllib
+import subprocess
 
 deletes = [#'w3schools.com', 'www.w3schools.com'
     # 'db.tt', 'dropbox.com', 'www.dropbox.com', 'm.dropbox.com', 'dl-debug.dropbox.com',
@@ -108,9 +109,7 @@ def dlhosts():
     from urllib.request import ProxyHandler, urlopen, build_opener
 
     url = {'github':'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
-               #'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
            'coding': "https://coding.net/u/scaffrey/p/hosts/git/raw/master/hosts-files/hosts"
-                     # "https://coding.net/u/scaffrey/p/hosts/git/raw/master/hosts"
            }
     hosts_url = url['coding']
     try:
@@ -232,6 +231,9 @@ def update(dl=None, alter_switch=True):
     write(dl + add)
     return err
 
+def edit():
+    subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
+                      file_dir + "default.txt"])
 
 if __name__ == '__main__':
     """CMD interface.
@@ -243,7 +245,7 @@ if __name__ == '__main__':
      Three options are
       显示hosts: open hosts file with notepad.exe of windows.
       强制刷新: force update with obsolete online source hosts file.
-      打开add列表: open default.txt containing additional hosts lines in
+      打开default列表: open default.txt containing additional hosts lines in
         current folder.  If default.txt doesn't exist, throw an error.
       清空
 
@@ -273,9 +275,8 @@ if __name__ == '__main__':
     input_message = '''
 0.显示hosts
 1.强制刷新
-2.打开add列表
+2.打开default列表
 3.清空hosts
-4.打开default列表
 回车：退出
         '''
 
@@ -291,15 +292,11 @@ if __name__ == '__main__':
             update(dl, True)
             return
         elif choice == '2':
-            subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
-                              file_dir + "default.txt"])
+            edit()
             return
         elif choice == '3':
             write()
             return
-        elif choice=="4":
-            subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
-                              file_dir + "default.txt"])
         else:
             raise IndexError('选项错误！')
 

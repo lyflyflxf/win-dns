@@ -160,8 +160,7 @@ if __name__ == '__main__':
     4.刷新DNS
     5.更新hosts
     6.清空hosts
-    7.编辑hosts
-    8.编辑DNS规则
+    7.编辑default.txt
     回车：退出
 '''
 
@@ -211,9 +210,9 @@ if __name__ == '__main__':
             purge()
             return
         elif choice == 7:
-            subprocess.Popen([r"D:\Program Files (x86)\notepad++\notepad++.exe", ])
-        elif choice == 8:
-            subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',acrylic_dir])
+            hosts_update.edit()
+        # elif choice == 8:
+        #     subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',acrylic_dir])
         # elif choice == 9:
         #     subprocess.Popen(['D:\Program Files (x86)\Acrylic-Portable\AcrylicController.exe',
         #                       'StartAcrylicServiceSilently'])
