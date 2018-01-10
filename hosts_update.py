@@ -22,10 +22,9 @@ TODO:
 """
 
 import os
-import urllib
-import subprocess
+from subprocess import Popen
 
-deletes = [#'w3schools.com', 'www.w3schools.com'
+deletes = [  # 'w3schools.com', 'www.w3schools.com'
     # 'db.tt', 'dropbox.com', 'www.dropbox.com', 'm.dropbox.com', 'dl-debug.dropbox.com',
     # 'linux.dropbox.com', 'd.dropbox.com', 'd.v.dropbox.com', 'dl-doc.dropbox.com',
     # 'api-d.dropbox.com', 'api.dropboxapi.com', 'api.dropbox.com', 'api.v.dropbox.com',
@@ -49,15 +48,15 @@ deletes = [#'w3schools.com', 'www.w3schools.com'
     # '49.media.tumblr.com', '50.media.tumblr.com', '65.media.tumblr.com', '66.media.tumblr.com', '67.media.tumblr.com',
     # '68.media.tumblr.com', '90.media.tumblr.com', '94.media.tumblr.com', '95.media.tumblr.com', '96.media.tumblr.com',
     # '97.media.tumblr.com', '98.media.tumblr.com', '99.media.tumblr.com'
-    ]
-delete_ends=['tumblr.com',]
+]
+delete_ends = ['tumblr.com', ]
 # 待删除域名
 
-alter = {  'twitter.com': ['t.co','card-dev.twitter.com'],
-    #'www.google.com': [],
-           }
-replace={#'61.91.161.217':'216.58.200.33'
+alter = {'twitter.com': ['t.co', 'card-dev.twitter.com'],
+         # 'www.google.com': [],
          }
+replace = {  # '61.91.161.217':'216.58.200.33'
+}
 
 """dict: Domains to be altered and its source.
 
@@ -77,7 +76,7 @@ expend = {
     #            "32.docs.google.com", "33.docs.google.com", "34.docs.google.com",
     #            "35.docs.google.com", "36.docs.google.com", "37.docs.google.com",
     #            "38.docs.google.com", "39.docs.google.com", "40.docs.google.com"],
-          'twitter.com': ['cards-dev.twitter.com']}
+    'twitter.com': ['cards-dev.twitter.com']}
 """dict: Additional domains to be added.
 
 The keys are the existing domain in online source file, values are domains to be added
@@ -94,7 +93,8 @@ Besides, it also serves as the destination of file to be written/overwritten.
 Value is string variable.
 """
 
-file_dir= r"E:\py\tools\lid3\\"
+file_dir = r"E:\py\tools\lid3\\"
+
 
 def dlhosts():
     """Download and return hosts file from online source.
@@ -108,21 +108,19 @@ def dlhosts():
     """
     from urllib.request import ProxyHandler, urlopen, build_opener
 
-    url = {'github':'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
+    url = {'github': 'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
            'coding': "https://coding.net/u/scaffrey/p/hosts/git/raw/master/hosts-files/hosts"
-           }
+           }  # use new github project:googlehosts
     hosts_url = url['coding']
     try:
         return urlopen(hosts_url, timeout=5).readlines()
-    except Exception:
+    except TimeoutError:
         proxy_handler = ProxyHandler({"https": 'https://127.0.0.1:8087'})
         opener = build_opener(proxy_handler)
         return opener.open(hosts_url).readlines()
 
-        # return open('E:\hosts').readlines()
 
-
-def judge(dl=None):
+def judge(dl=dlhosts()):
     """Judge whether to update.
 
     Judge by comparing the time stamp in the online source file and local file.
@@ -134,8 +132,6 @@ def judge(dl=None):
         bool: if online source file updates later than local file, return True,
          otherwise False.
     """
-    if dl==None:
-        dl= dlhosts()
     prev = open(win_hosts_dir, 'r').readlines()
     if len(prev) == 0:
         return True
@@ -146,26 +142,29 @@ def judge(dl=None):
 
 
 def write(dl=None):
+    """Write hosts rules to system hosts file
+
+    Args:
+        dl (list):the downloaded hosts file from online source
+    """
+    if dl is None:
+        dl = []
     try:
-        add = open(file_dir+"default.txt", 'r').readlines()
+        add = open(file_dir + "default.txt", 'r').readlines()
     except IOError:
         add = []
         print('error')
-
-    if dl == None:
-        dl=add
-    else:
-        dl+=add
+    dl += add
 
     save = open(win_hosts_dir, 'w')
-    for i,each in enumerate(dl):
-        if isinstance(each,bytes):
-            dl[i]=dl[i].decode('utf-8')
+    for i, each in enumerate(dl):
+        if isinstance(each, bytes):
+            dl[i] = dl[i].decode('utf-8')
     save.writelines(dl)
     save.close()
 
 
-def update(dl=None, alter_switch=True):
+def update(dl=dlhosts(), alter_switch=True):
     """Update the local hosts file.
 
     Update with optional hosts file in list format with additional
@@ -174,23 +173,21 @@ def update(dl=None, alter_switch=True):
     error.
 
     Args:
-        dl (list[=dlhosts()]): optional, the online source hosts file in list format.
+        alter_switch (bool): determines whether to edit the original file from web
+        dl (list): optional, the online source hosts file in list format.
 
     Returns:
-        None.
+        None except for error messages.
     """
     global deletes
-    err=None
-    replace_list=replace.keys()
-
-    if dl==None:
-        dl=dlhosts()
+    err = None
+    replace_list = replace.keys()
 
     try:
-        add = open('default.txt','r').readlines()#r'E:\py\tools\lid\default.txt', 'r').readlines()
-    except IOError as error:
-        print (error)
-        err=error
+        add = open('default.txt', 'r').readlines()  # r'E:\py\tools\lid\default.txt', 'r').readlines()
+    except IOError as ioe:
+        print(ioe)
+        err = ioe
         add = []
 
     if alter_switch:
@@ -201,24 +198,24 @@ def update(dl=None, alter_switch=True):
             else:
                 expend.update({key: value})
 
-    l = len(dl)
+    dl_length = len(dl)
     i = 0
-    while i < l:
+    while i < dl_length:
         line = dl[i].decode('utf-8')  # 一行IP和域名
         if line[0] == '#' or line == '\n':
             i += 1
             continue
 
         cut = line.split('\t')  # -> [IP,域名]
-        ip=cut[0]
+        ip = cut[0]
         domain = cut[1][:-1]
 
         if ip in replace_list:
-            dl[i]=replace[ip] + '\t' + domain + '\n'
+            dl[i] = replace[ip] + '\t' + domain + '\n'
 
         if domain in deletes:
             del dl[i]
-            l -= 1
+            dl_length -= 1
             i -= 1
             deletes.remove(domain)
 
@@ -231,9 +228,18 @@ def update(dl=None, alter_switch=True):
     write(dl + add)
     return err
 
+
 def edit():
-    subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
-                      file_dir + "default.txt"])
+    """Edit default.txt with notepad"""
+    Popen([r'C:\WINDOWS\system32\notepad.exe',
+           file_dir + "default.txt"])
+
+
+def view():
+    """View the content of default.txt with notepad"""
+    Popen([r'C:\WINDOWS\system32\notepad.exe',
+           win_hosts_dir])
+
 
 if __name__ == '__main__':
     """CMD interface.
@@ -270,24 +276,12 @@ if __name__ == '__main__':
         print('未更新 hosts')
         print('上次是', dl[2].split(' ')[-1], '今天是', time.strftime('%Y-%m-%d'))
 
-    import subprocess
-
-    input_message = '''
-0.显示hosts
-1.强制刷新
-2.打开default列表
-3.清空hosts
-回车：退出
-        '''
-
 
     def run(choice):
         if choice == '':
             exit()
-            
         elif choice == '0':
-            subprocess.Popen([r'C:\WINDOWS\system32\notepad.exe',
-                              win_hosts_dir])
+            view()
             return
         elif choice == '1':
             update(dl, True)
@@ -301,8 +295,13 @@ if __name__ == '__main__':
         else:
             raise IndexError('选项错误！')
 
-
-    # run('1')
+    input_message = '''
+    0.显示hosts
+    1.强制刷新
+    2.打开default列表
+    3.清空hosts
+    回车：退出
+            '''
     while 1:
         try:
             run(input(input_message))
@@ -311,5 +310,3 @@ if __name__ == '__main__':
             os.system('pause')
         finally:
             os.system('cls')
-
-
