@@ -3,9 +3,10 @@
 
 from tkinter import *
 import lid
+import hosts_update as hu
 
 
-class StdRedirector():
+class StdRedirector:
     def __init__(self, text_widget):
         self.text_space = text_widget
 
@@ -30,8 +31,8 @@ class MyApp:
         self.text = Message(self.myContainer1, width=600, textvariable=self.topText)
         self.text.grid(row=0, column=0, sticky=W, padx=1)
 
-        self.text_list = [u"在ALI和ONE之间切换", u"PING剪切板上的地址", u"PING当前DNS和百度",
-                          u"刷新DNS", u"更新hosts"]
+        self.text_list = [u"Tencent/PaBo间切换", u"PING剪切板上的地址", u"PING当前DNS",
+                          u"刷新DNS", u"更新hosts",'清空hosts','编辑default.txt','查看hosts']
         for (i, text) in enumerate(self.text_list):
             self.button1 = Button(self.myContainer1, text=text,
                                   background="tan", width=20)  # 按钮宽度，字符数
@@ -57,7 +58,6 @@ class MyApp:
         self.pingOut.grid()
         self.pingOut.delete('1.0', END)
         run_ping(self.pingOut, self.dns.server, multi=True)
-        run_ping(self.pingOut, 'www.baidu.com', multi=True)
 
     def button4Click(self, event):
         self.topText.set(self.dns.refresh() + u'\n' + self.showCurrent())
@@ -65,8 +65,18 @@ class MyApp:
     def button5Click(self, event):
         self.topText.set(u'正在更新...\n' + self.showCurrent())
         self.myContainer1.update_idletasks()
-        lid.update()
+        hu.update()
         self.topText.set(u'更新成功\n' + self.showCurrent())
+
+    def button6Click(self, event):
+        hu.write()
+        self.topText.set('已经清空')
+
+    def button7Click(self, event):
+        hu.edit()
+
+    def button8Click(self, event):
+        hu.view()
 
     def showCurrent(self):
         return self.curr + str(self.dns) + self.intro
@@ -93,7 +103,7 @@ def run_ping(widget, url, count=3, multi=False):
     try:
         widget.insert(END, ping(url, first_line=True))
     except ValueError as e_message:
-        widget.insert(END, u'网址有误：'+unicode(e_message))
+        widget.insert(END, u'网址有误：'+str(e_message))
     else:
         for i in range(count - 1):
             widget.insert(END, ping(url))
