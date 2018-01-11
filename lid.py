@@ -69,15 +69,6 @@ def ping(url):
             'time': result.ResponseTime,
             'domain': url, }
 
-
-def update():
-    hosts_update.update()
-
-
-def purge():
-    hosts_update.write()
-
-
 class Dns:
     ali = "Ali"
     one = "One"
@@ -212,10 +203,10 @@ if __name__ == '__main__':
             pre_msg = dns.refresh()
             return
         elif choice == 5:
-            update()
+            hosts_update.update()
             return
         elif choice == 6:
-            purge()
+            hosts_update.write()
             return
         elif choice == 7:
             hosts_update.edit()
