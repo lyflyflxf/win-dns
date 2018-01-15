@@ -75,6 +75,7 @@ class Dns:
     tencent = "Tencent"
     local = "Acrylic"
     pabo = 'PaBo'
+    preferences = [pabo, tencent, ]  # preferred DNS servers
 
     # DNS地址必须为tuple，如果只有一个IP，则必须在IP后且括号内加上逗号，如('xxx',)
     dict = {ali: ('223.5.5.5', '223.6.6.6'),
@@ -84,17 +85,13 @@ class Dns:
             pabo: ('123.207.164.150', '140.143.87.229',), }
 
     def __init__(self):
-        self.preferences = [self.pabo, self.tencent, ]  # preferred DNS servers
-        for each in wmi.Win32_NetworkAdapterConfiguration(IPEnabled=True):
-            if each.DefaultIPGateway is not None:
-                # self.index = each.Index
-                # self.ip = each.IPAddress[0]
-                self.server = each.DNSServerSearchOrder
-                self.now = each
-                return
-
-        self.server = ''  # 用wmi ping None貌似会陷入死循环
-        return
+        self.setting=[each for each in wmi.Win32_NetworkAdapterConfiguration(IPEnabled=True)
+                      if each.DefaultIPGateway is not None]
+        if self.setting:
+            self.setting = self.setting[0]
+            self.server = self.setting.DNSServerSearchOrder
+        else:
+            self.server = ''  # 用wmi ping None貌似会陷入死循环
 
     def __repr__(self):
         """Provide DNS information for print.
@@ -139,7 +136,7 @@ class Dns:
         else:
             server = switches[0]
 
-        return_code = self.now.SetDNSServerSearchOrder(server)[0]
+        return_code = self.setting.SetDNSServerSearchOrder(server)[0]
         self.refresh()
         if return_code == 0:
             return '修改成功'
