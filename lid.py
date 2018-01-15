@@ -143,6 +143,8 @@ class Dns:
         self.refresh()
         if return_code == 0:
             return '修改成功'
+        elif return_code == 91:
+            return '修改失败。请获取管理员权限后重试。'
         else:
             return '修改失败，错误代码：' + str(return_code)
 
