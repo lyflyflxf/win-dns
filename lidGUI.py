@@ -5,7 +5,6 @@ from tkinter import *
 import lid
 import hosts_update as hu
 
-
 class StdRedirector:
     def __init__(self, text_widget):
         self.text_space = text_widget
@@ -16,83 +15,88 @@ class StdRedirector:
         self.text_space.see("end")
         self.text_space.config(state=DISABLED)
 
-
 class MyApp:
     def __init__(self, parent):
-        self.myContainer1 = Frame(parent)
-        self.myContainer1.pack()
-
-        self.dns = lid.Dns()
-        self.curr = u'当前DNS为：'
-        self.intro = u'\n\n请选择:'
-
-        self.topText = StringVar()
-        self.topText.set(self.showCurrent())
-        self.text = Message(self.myContainer1, width=600, textvariable=self.topText)
+        self.c = Frame(parent)
+        self.c.pack()
+        self.top_text = StringVar()
+        self.text = Message(self.c, width=600, textvariable=self.top_text,
+                            font=('Times', '12'))
         self.text.grid(row=0, column=0, sticky=W, padx=1)
+        text_list = ["Tencent/PaBo间切换", "PING剪切板上的地址", "PING当前DNS",
+                          "刷新DNS", "更新hosts",'清空hosts','编辑default.txt','查看hosts']
+        for (i, text) in enumerate(text_list):
+            sn = str(i + 1)
+            self.button = Button(self.c, text='%s. %s' % (sn, text),
+                                 background="tan", width=20)  # 按钮宽度，字符数
+            eval('self.button.bind("<Button-1>", self.button%s)'%sn)
+            eval('self.button.bind("<Key-%s>", self.button%s)'% (sn,sn))
+            # eval('self.button1.bind("<Return>", self.button' + str(i + 1) + ')')
+            self.button.grid(row=i + 1, column=0, sticky=NW)
 
-        self.text_list = [u"Tencent/PaBo间切换", u"PING剪切板上的地址", u"PING当前DNS",
-                          u"刷新DNS", u"更新hosts",'清空hosts','编辑default.txt','查看hosts']
-        for (i, text) in enumerate(self.text_list):
-            self.button1 = Button(self.myContainer1, text=text,
-                                  background="tan", width=20)  # 按钮宽度，字符数
-            eval('self.button1.bind("<Button-1>", self.button' + str(i + 1) + 'Click)')
-            eval('self.button1.bind("<Return>", self.button' + str(i + 1) + 'Click)')
-            self.button1.grid(row=i + 1, column=0, sticky=NW)
+        self.textbox = Text(self.c, width=60, height=15)
+        self.textbox.grid(row=0, column=1, sticky=NW, rowspan=len(text_list) + 1)
+        self.textbox.grid_remove()
 
-        self.pingOut = Text(self.myContainer1, width=60, height=15)
-        self.pingOut.grid(row=0, column=1, sticky=NW, rowspan=len(self.text_list) + 1)
-        self.pingOut.grid_remove()
-
-    def button1Click(self, event):
-        result = self.dns.switch()
         self.dns = lid.Dns()
-        self.topText.set(result + u'\n' + self.showCurrent())
+        self.head = u'当前DNS：'
+        self.result = ''
+        self.set_text()
 
-    def button2Click(self, event):
+    def button1(self, event):
+        self.set_text(self.dns.switch())
+        self.dns = lid.Dns()
+
+    def button2(self, event):
         import pyperclip
-        self.pingOut.grid()
-        run_ping(self.pingOut, pyperclip.paste())
+        self.textbox.grid()
+        run_ping(self.textbox, pyperclip.paste())
 
-    def button3Click(self, event):
-        self.pingOut.grid()
-        self.pingOut.delete('1.0', END)
-        run_ping(self.pingOut, self.dns.server, multi=True)
+    def button3(self, event):
+        self.textbox.grid()
+        self.textbox.delete('1.0', END)
+        for ip in self.dns.server:
+            run_ping(self.textbox, ip, multi=True)
 
-    def button4Click(self, event):
-        self.topText.set(self.dns.refresh() + u'\n' + self.showCurrent())
+    def button4(self, event):
+        self.set_text(self.dns.refresh())
 
-    def button5Click(self, event):
-        self.topText.set(u'正在更新...\n' + self.showCurrent())
-        self.myContainer1.update_idletasks()
+    def button5(self, event):
+        self.set_text('正在更新...')
         hu.update()
-        self.topText.set(u'更新成功\n' + self.showCurrent())
+        self.set_text('更新成功')
 
-    def button6Click(self, event):
+    def button6(self, event):
         hu.write()
-        self.topText.set('已经清空')
+        self.set_text('hosts已清空')
 
-    def button7Click(self, event):
+    def button7(self, event):
         hu.edit()
 
-    def button8Click(self, event):
+    def button8(self, event):
         hu.view()
 
-    def showCurrent(self):
-        return self.curr + str(self.dns) + self.intro
+    def set_text(self, update=None):
+        if update:
+            self.result='\n'+update
+        self.top_text.set(self.head + str(self.dns) + self.result)
+        self.text.update()
 
 
 def run_ping(widget, url, count=3, multi=False):
     def ping(url, first_line=False):
         text = ''
         if first_line:
-            text = u'Ping ' + lid.url2domain(url) + u' ' + str(count) + u' Times:\n\n'
+            text = u'Ping ' + lid.url2domain(url) + u' ' + str(count) + u' Times:\n'
+            widget.insert(END,text)
+            text = ''
+            widget.update()
 
         result = lid.ping(url)
-        if result['ip'] == '':
-            text = text + u'Timeout.' + '\n'
+        if result['ip']:
+            text = text + 'IP: %(ip)s ,Time: %(time)d\n' % result
         else:
-            text = text + u'IP:' + result['ip'] + u' ,Time:' + str(result['time']) + '\n'
+            text = text + u'Timeout.' + '\n'
         return text
 
     if multi:
