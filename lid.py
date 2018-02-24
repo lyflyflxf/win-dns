@@ -38,7 +38,7 @@ def url2domain(url):
     error_class = validators.utils.ValidationFailure
     domain = ''
     try:
-        url = urlparse(url)
+        url = urlparse(url.replace(" ", ""))
     except Exception:
         raise err
     else:
@@ -82,7 +82,7 @@ class Dns:
             one: ('114.215.126.16', '42.236.82.22'),
             tencent: ('119.29.29.29',),
             local: ('127.0.0.1', '223.6.6.6'),
-            pabo: ('123.207.164.150', '140.143.87.229',), }
+            pabo: ('140.143.87.229','123.207.164.150', ), }
 
     def __init__(self):
         self.setting=[each for each in wmi.Win32_NetworkAdapterConfiguration(IPEnabled=True)
@@ -99,12 +99,12 @@ class Dns:
         Returns:
             string of DNS server IP
         """
-        if self.server == '':
-            return 'No Internet Connection'
         for key, value in self.dict.items():
             if self.server == value:
                 # print(key)
                 return key + ' DNS'
+        if self.server == '':
+            return 'No Internet Connection'
         return str(self.server)
 
     def refresh(self):
@@ -113,15 +113,15 @@ class Dns:
         Returns:
             Result of refreshment
         """
-        if self.__repr__() == self.local:
-            subprocess.Popen(['D:\Program Files (x86)\Acrylic-Portable\AcrylicController.exe',
-                              'PurgeAcrylicCacheDataSilently'])
+        # if self.server != self.local:
+        text = os.popen('ipconfig /flushdns').readlines()[-1]
+        if text.startswith('Successfully') or text.startswith('已成功'):
+            return '刷新成功'
         else:
-            text = os.popen('ipconfig /flushdns').readlines()[-1]
-            if text.startswith('Successfully') or text.startswith('已成功'):
-                return '刷新成功'
-            else:
-                return '刷新失败'
+            return '刷新失败'
+        # else:
+        #     subprocess.Popen(['D:\Program Files (x86)\Acrylic-Portable\AcrylicController.exe',
+        #                       'PurgeAcrylicCacheDataSilently'])
 
     def switch(self):
         """Switch DNS among preferred ones.
@@ -170,7 +170,7 @@ if __name__ == '__main__':
         except ValueError as e:
             print('异常网址：', e)
         else:
-            print('\n正在 Ping %s，[%s]' % (out['domain'], out['ip']))
+            print('\n正在 Ping %s [%s]' % (out['domain'], out['ip']))
             for i in range(1, 4):
                 print('%s：时间 %s ms' % (i, out['time']))
 
@@ -178,7 +178,8 @@ if __name__ == '__main__':
     def run(choice):
         """Process choice from user"""
         if choice == '':
-            exit()
+            from sys import exit as exit1
+            exit1()
         else:
             choice = int(choice)
 

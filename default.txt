@@ -4,9 +4,15 @@
 192.0.77.48	s.w.org
 192.0.77.32	s0.wp.com
 
+127.0.0.1	pussl32.com
+
+104.25.26.31	share.dmhy.org
+
 192.229.173.207	www.w3schools.com
 104.25.27.31	share.dmhy.org
+61.244.29.104	sm.ms
 
+203.208.39.223	translate.google.cn
 # MEGA Start
 31.216.148.12	mega.nz
 # MEGA End
