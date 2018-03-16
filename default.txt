@@ -4,6 +4,8 @@
 192.0.77.48	s.w.org
 192.0.77.32	s0.wp.com
 
+61.244.214.9	i.loli.net
+
 127.0.0.1	pussl32.com
 
 104.25.26.31	share.dmhy.org
