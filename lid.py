@@ -1,22 +1,18 @@
 #!/usr/bin/env python
-# -*- coding: gbk -*-
+# -*- coding: utf-8 -*-
 
-"""Network Adapter Information Module
+# Network Adapter Information Module
+# Pymi is required.
+# This module shows information of one current active network adapter, including the
+# name of DNS.  It also contain details in its attributes.
+# Example:
+#     python lid.py
+#
+# Start the file will lead to a simple CMD interface.
 
-pywin32 and wmi needed to run this script.
-
-This module shows information of one current active network adapter, including the
-name of DNS.  It also contain details in its attributes.
-
-Example:
-    python lid.py
-
-Start the file will lead to a simple CMD interface.
-
-"""
 import os
 import wmi
-import subprocess
+# import subprocess
 import hosts_update
 
 wmi = wmi.WMI()
@@ -78,7 +74,7 @@ class Dns:
     pabo = 'PaBo'
     preferences = [pabo, tencent, ]  # preferred DNS servers
 
-    # DNSµØÖ·±ØĞëÎªtuple£¬Èç¹ûÖ»ÓĞÒ»¸öIP£¬Ôò±ØĞëÔÚIPºóÇÒÀ¨ºÅÄÚ¼ÓÉÏ¶ººÅ£¬Èç('xxx',)
+    # DNSåœ°å€å¿…é¡»ä¸ºtupleï¼Œå¦‚æœåªæœ‰ä¸€ä¸ªIPï¼Œåˆ™å¿…é¡»åœ¨IPåä¸”æ‹¬å·å†…åŠ ä¸Šé€—å·ï¼Œå¦‚('xxx',)
     dict = {ali: ('223.5.5.5', '223.6.6.6'),
             one: ('114.215.126.16', '42.236.82.22'),
             tencent: ('119.29.29.29',),
@@ -92,7 +88,7 @@ class Dns:
             self.setting = self.setting[0]
             self.server = self.setting.DNSServerSearchOrder
         else:
-            self.server = ''  # ÓÃwmi ping NoneÃ²ËÆ»áÏİÈëËÀÑ­»·
+            self.server = ''  # ç”¨wmi ping Noneè²Œä¼¼ä¼šé™·å…¥æ­»å¾ªç¯
 
     def __repr__(self):
         """Provide DNS information for print.
@@ -116,10 +112,10 @@ class Dns:
         """
         # if self.server != self.local:
         text = os.popen('ipconfig /flushdns').readlines()[-1]
-        if text.startswith('Successfully') or text.startswith('ÒÑ³É¹¦'):
-            return 'Ë¢ĞÂ³É¹¦'
+        if text.startswith('Successfully') or text.startswith('å·²æˆåŠŸ'):
+            return 'åˆ·æ–°æˆåŠŸ'
         else:
-            return 'Ë¢ĞÂÊ§°Ü'
+            return 'åˆ·æ–°å¤±è´¥'
         # else:
         #     subprocess.Popen(['D:\Program Files (x86)\Acrylic-Portable\AcrylicController.exe',
         #                       'PurgeAcrylicCacheDataSilently'])
@@ -140,26 +136,26 @@ class Dns:
         return_code = self.setting.SetDNSServerSearchOrder(server)[0]
         self.refresh()
         if return_code == 0:
-            return 'ĞŞ¸Ä³É¹¦'
+            return 'ä¿®æ”¹æˆåŠŸ'
         elif return_code == 91:
-            return 'ĞŞ¸ÄÊ§°Ü¡£Çë»ñÈ¡¹ÜÀíÔ±È¨ÏŞºóÖØÊÔ¡£'
+            return 'ä¿®æ”¹å¤±è´¥ã€‚è¯·è·å–ç®¡ç†å‘˜æƒé™åé‡è¯•ã€‚'
         else:
-            return 'ĞŞ¸ÄÊ§°Ü£¬´íÎó´úÂë£º' + str(return_code)
+            return 'ä¿®æ”¹å¤±è´¥ï¼Œé”™è¯¯ä»£ç ï¼š' + str(return_code)
 
 
 if __name__ == '__main__':
-    input_message = '''
-    1.Tencent/PaBo¼äÇĞ»»
-    2.PING¼ôÇĞ°åÓòÃû
-    3.ÓÃPING¼ì²éÍøÂç
-    4.Ë¢ĞÂDNS
-    5.¸üĞÂhosts
-    6.Çå¿Õhosts
-    7.±à¼­default.txt
-    8.²é¿´hosts
-    »Ø³µ£ºÍË³ö
+    input_message = u'''
+    1.Tencent/PaBoé—´åˆ‡æ¢
+    2.PINGå‰ªåˆ‡æ¿åŸŸå
+    3.ç”¨PINGæ£€æŸ¥ç½‘ç»œ
+    4.åˆ·æ–°DNS
+    5.æ›´æ–°hosts
+    6.æ¸…ç©ºhosts
+    7.ç¼–è¾‘default.txt
+    8.æŸ¥çœ‹hosts
+    å›è½¦ï¼šé€€å‡º
 '''
-    # 8.±à¼­Acrylic
+    # 8.ç¼–è¾‘Acrylic
     acrylic_dir = 'D:\Program Files (x86)\Acrylic-Portable\AcrylicConfiguration.ini'
     pre_msg = ''
 
@@ -169,11 +165,11 @@ if __name__ == '__main__':
         try:
             out = ping(url2domain(url))
         except ValueError as e:
-            print('Òì³£ÍøÖ·£º', e)
+            print('å¼‚å¸¸ç½‘å€ï¼š', e)
         else:
-            print('\nÕıÔÚ Ping %s [%s]' % (out['domain'], out['ip']))
+            print('\næ­£åœ¨ Ping %s [%s]' % (out['domain'], out['ip']))
             for i in range(1, 4):
-                print('%s£ºÊ±¼ä %s ms' % (i, out['time']))
+                print('%sï¼šæ—¶é—´ %s ms' % (i, out['time']))
 
 
     def run(choice):
@@ -218,13 +214,13 @@ if __name__ == '__main__':
         #     subprocess.Popen(['D:\Program Files (x86)\Acrylic-Portable\AcrylicController.exe',
         #                       'StartAcrylicServiceSilently'])
         else:
-            raise ValueError('Ñ¡Ïî´íÎó£¡')
+            raise ValueError('é€‰é¡¹é”™è¯¯ï¼')
 
 
     os.system('cls')
     while 1:
         dns = Dns()
-        print("%s µ±Ç°DNSÎª %s£¬ÇëÑ¡Ôñ£º" % (pre_msg, dns))
+        print("%s å½“å‰DNSä¸º %sï¼Œè¯·é€‰æ‹©ï¼š" % (pre_msg, dns))
         try:
             run(input(input_message))
         except ValueError as error:

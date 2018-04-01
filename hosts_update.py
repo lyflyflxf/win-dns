@@ -22,6 +22,7 @@ TODO:
 """
 
 import os
+import sys
 from subprocess import Popen
 
 deletes = [  # 'w3schools.com', 'www.w3schools.com'
@@ -93,7 +94,7 @@ Besides, it also serves as the destination of file to be written/overwritten.
 Value is string variable.
 """
 
-file_dir = r"E:\py\tools\lid3\\"
+file_dir = sys.path[0]+"\\" # r"E:\py\tools\lid3\\"
 
 
 def dlhosts():
