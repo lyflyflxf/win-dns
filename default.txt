@@ -9,9 +9,10 @@
 127.0.0.1	pussl32.com
 
 104.25.26.31	share.dmhy.org
+52.222.238.58	plugins.jetbrains.com
 
 192.229.173.207	www.w3schools.com
-104.25.27.31	share.dmhy.org
+
 61.244.29.104	sm.ms
 
 203.208.39.223	translate.google.cn
@@ -20,25 +21,25 @@
 # MEGA End
 
 # Wikipedia Start
-198.35.26.96	www.wikipedia.org
-198.35.26.96	login.wikimedia.org
-198.35.26.96	wuu.wikipedia.org
-198.35.26.96	zh-yue.wikipedia.org
-198.35.26.96	zh.wikipedia.org
-198.35.26.96	zh.m.wikipedia.org
-198.35.26.96	ja.wikipedia.org
-198.35.26.96	ja.m.wikipedia.org
+91.198.174.192	www.wikipedia.org
+91.198.174.192	login.wikimedia.org
+91.198.174.192	wuu.wikipedia.org
+91.198.174.192	zh-yue.wikipedia.org
+91.198.174.192	zh.wikipedia.org
+91.198.174.192	zh.m.wikipedia.org
+91.198.174.192	ja.wikipedia.org
+91.198.174.192	ja.m.wikipedia.org
 198.35.26.112	upload.wikimedia.org
 # Wikipedia End
 
 # Steam Start
 223.119.217.234	steamcommunity.com
-223.119.217.234	store.steampowered.com
-223.119.217.234	help.steampowered.com
-223.119.50.137	steamcommunity-a.akamaihd.net
-223.119.248.8	steamuserimages-a.akamaihd.net
-223.119.50.139	steamcdn-a.akamaihd.net
-223.119.248.26	cdn.akamai.steamstatic.com
+173.223.87.13	help.steampowered.com
+23.50.18.229	store.steampowered.com
+23.4.240.26	steamcommunity-a.akamaihd.net
+184.28.218.74	steamuserimages-a.akamaihd.net
+184.25.205.16	steamcdn-a.akamaihd.net
+184.25.205.19	cdn.akamai.steamstatic.com
 # Steam End
 
 ### 屏蔽百度定位
@@ -71,25 +72,6 @@
 127.0.0.1 nfdnserror8.wo.com.cn
 127.0.0.1 nfdnserror9.wo.com.cn
 127.0.0.1 nfdnserror10.wo.com.cn
-
-#adobe update
-127.0.0.1 lmlicenses.wip4.adobe.com
-127.0.0.1 lm.licenses.adobe.com
-127.0.0.1 3dns-2.adobe.com
-127.0.0.1 3dns-3.adobe.com
-127.0.0.1 activate.adobe.com
-127.0.0.1 activate-sea.adobe.com
-127.0.0.1 activate-sjc0.adobe.com
-127.0.0.1 adobe-dns.adobe.com
-127.0.0.1 adobe-dns-2.adobe.com
-127.0.0.1 adobe-dns-3.adobe.com
-127.0.0.1 ereg.adobe.com
-127.0.0.1 hl2rcv.adobe.com
-127.0.0.1 practivate.adobe.com
-127.0.0.1 wip3.adobe.com
-127.0.0.1 activate.wip3.adobe.com
-127.0.0.1 ereg.wip3.adobe.com
-127.0.0.1 wwis-dubc1-vip60.adobe.com
 
 # Pixiv Start
 210.129.120.44	www.pixiv.net
