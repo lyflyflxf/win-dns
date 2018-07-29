@@ -10,7 +10,7 @@
 
 104.25.26.31	share.dmhy.org
 52.222.238.58	plugins.jetbrains.com
-
+47.74.226.26	www.japari.press
 192.229.173.207	www.w3schools.com
 
 61.244.29.104	sm.ms
@@ -19,6 +19,11 @@
 # MEGA Start
 31.216.148.12	mega.nz
 # MEGA End
+
+104.16.59.5     discordapp.com
+104.16.250.144	dl.discordapp.net
+104.16.60.37	gateway.discord.gg
+104.16.11.231	cdn.discordapp.com
 
 # Wikipedia Start
 91.198.174.192	www.wikipedia.org
@@ -35,12 +40,14 @@
 # Steam Start
 223.119.217.234	steamcommunity.com
 173.223.87.13	help.steampowered.com
-23.50.18.229	store.steampowered.com
+23.37.147.226	store.steampowered.com
 23.4.240.26	steamcommunity-a.akamaihd.net
 184.28.218.74	steamuserimages-a.akamaihd.net
 184.25.205.16	steamcdn-a.akamaihd.net
 184.25.205.19	cdn.akamai.steamstatic.com
 # Steam End
+
+
 
 ### 屏蔽百度定位
 

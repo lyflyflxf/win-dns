@@ -108,6 +108,7 @@ def dlhosts():
         list: list format of hosts file.
     """
     from urllib.request import ProxyHandler, urlopen, build_opener
+    from urllib.error import URLError
 
     url = {'github': 'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
            'coding': "https://coding.net/u/scaffrey/p/hosts/git/raw/master/hosts-files/hosts"
@@ -119,9 +120,11 @@ def dlhosts():
         proxy_handler = ProxyHandler({"https": 'https://127.0.0.1:8087'})
         opener = build_opener(proxy_handler)
         return opener.open(hosts_url).readlines()
+    # except URLError:
+    #     return
 
 
-def judge(dl=dlhosts()):
+def judge(dl=None):
     """Judge whether to update.
 
     Judge by comparing the time stamp in the online source file and local file.
@@ -133,6 +136,9 @@ def judge(dl=dlhosts()):
         bool: if online source file updates later than local file, return True,
          otherwise False.
     """
+    if dl==None:
+        dl=dlhosts()
+
     prev = open(win_hosts_dir, 'r').readlines()
     if len(prev) == 0:
         return True
@@ -165,7 +171,7 @@ def write(dl=None):
     save.close()
 
 
-def update(dl=dlhosts(), alter_switch=True):
+def update(dl=None, alter_switch=True):
     """Update the local hosts file.
 
     Update with optional hosts file in list format with additional
@@ -180,6 +186,9 @@ def update(dl=dlhosts(), alter_switch=True):
     Returns:
         None except for error messages.
     """
+    if dl==None:
+        dl = dlhosts()
+
     global deletes
     err = None
     replace_list = replace.keys()
@@ -232,7 +241,7 @@ def update(dl=dlhosts(), alter_switch=True):
 
 def edit():
     """Edit default.txt with notepad"""
-    Popen([r'C:\WINDOWS\system32\notepad.exe',
+    Popen([r"C:\Program Files (x86)\Notepad++\notepad++.exe",
            file_dir + "default.txt"])
 
 
