@@ -193,7 +193,6 @@ if __name__ == '__main__':
         elif choice == 3:
             for ip in dns.server:
                 ping_print(ip)
-            ping_print('206.189.146.131')
             os.system('pause')
             return
         elif choice == 4:
