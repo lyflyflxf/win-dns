@@ -72,14 +72,16 @@ class Dns:
     tencent = "Tencent"
     local = "Acrylic"
     pabo = 'Pure'
-    preferences = [pabo, tencent, ]  # preferred DNS servers
+    google = 'Google'
+    preferences = [tencent, google,]  # preferred DNS servers
 
     # DNS地址必须为tuple，如果只有一个IP，则必须在IP后且括号内加上逗号，如('xxx',)
     dict = {ali: ('223.5.5.5', '223.6.6.6'),
             one: ('114.215.126.16', '42.236.82.22'),
             tencent: ('119.29.29.29',),
             local: ('127.0.0.1', '223.6.6.6'),
-            pabo: ( '123.207.13.111',), }
+            pabo: ( '123.207.13.111',),
+            google: ('8.8.8.8', '8.8.4.4'), }
 
     def __init__(self):
         self.setting = [each for each in wmi.Win32_NetworkAdapterConfiguration(IPEnabled=True)
@@ -145,7 +147,7 @@ class Dns:
 
 if __name__ == '__main__':
     input_message = u'''
-    1.Tencent/Pure间切换
+    1.Tencent/Google间切换
     2.PING剪切板域名
     3.用PING检查网络
     4.刷新DNS
